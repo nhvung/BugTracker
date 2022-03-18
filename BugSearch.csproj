@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{431A6471-2A7A-435D-AD7C-B3120F52C1DD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BugSearch</RootNamespace>
+    <AssemblyName>BugSearch</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mainIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FSEncode, Version=1.0.2017.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\@@FSSources\@@Services\FSMailService\DLL\FSEncode.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AccountF.Designer.cs">
+      <DependentUpon>AccountF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddBugF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddBugF.Designer.cs">
+      <DependentUpon>AddBugF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddTextF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddTextF.Designer.cs">
+      <DependentUpon>AddTextF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlarmF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlarmF.Designer.cs">
+      <DependentUpon>AlarmF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BugDefine.cs" />
+    <Compile Include="BugListF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BugListF.Designer.cs">
+      <DependentUpon>BugListF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BugStatisticF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BugStatisticF.Designer.cs">
+      <DependentUpon>BugStatisticF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataGridViewStatusColumn.cs" />
+    <Compile Include="DelegateProcess.cs" />
+    <Compile Include="LoginDatabaseF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginDatabaseF.Designer.cs">
+      <DependentUpon>LoginDatabaseF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogInF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogInF.Designer.cs">
+      <DependentUpon>LogInF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainF.Designer.cs">
+      <DependentUpon>MainF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PictureViewF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PictureViewF.Designer.cs">
+      <DependentUpon>PictureViewF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AccountF.resx">
+      <DependentUpon>AccountF.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddBugF.resx">
+      <DependentUpon>AddBugF.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddTextF.resx">
+      <DependentUpon>AddTextF.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlarmF.resx">
+      <DependentUpon>AlarmF.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BugListF.resx">
+      <DependentUpon>BugListF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BugStatisticF.resx">
+      <DependentUpon>BugStatisticF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginDatabaseF.resx">
+      <DependentUpon>LoginDatabaseF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogInF.resx">
+      <DependentUpon>LogInF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainF.resx">
+      <DependentUpon>MainF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PictureViewF.resx">
+      <DependentUpon>PictureViewF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DLL\VSBugTracker.dll" />
+    <Content Include="Icons\blocker.png" />
+    <None Include="Icons\statuses\ByDesign.PNG" />
+    <None Include="Icons\statuses\InProcess.PNG" />
+    <None Include="Icons\statuses\New.PNG" />
+    <None Include="Icons\statuses\NotFix.PNG" />
+    <None Include="Icons\statuses\Reopen.PNG" />
+    <None Include="Icons\statuses\Resolved.PNG" />
+    <None Include="Icons\statuses\Verified.PNG" />
+    <None Include="Icons\up.png" />
+    <Content Include="mainIcon.ico" />
+    <None Include="Icons\document.png" />
+    <None Include="Icons\trash.png" />
+    <None Include="Icons\generic.png" />
+    <None Include="Icons\task.png" />
+    <None Include="Icons\story.png" />
+    <None Include="Icons\resolved.png" />
+    <None Include="Icons\reopened.png" />
+    <None Include="Icons\open.png" />
+    <None Include="Icons\inprogress.png" />
+    <None Include="Icons\information.png" />
+    <None Include="Icons\closed.png" />
+    <Content Include="Icons\critical.png" />
+    <Content Include="Icons\high.png" />
+    <Content Include="Icons\highest.png" />
+    <Content Include="Icons\low.png" />
+    <Content Include="Icons\major.png" />
+    <Content Include="Icons\medium.png" />
+    <Content Include="Icons\minor.png" />
+    <Content Include="Icons\trivial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\VSBugTracker.2.2020.0714.5\VSBugTracker.csproj">
+      <Project>{281a7855-666e-4a71-bbdb-f355dc72d9c8}</Project>
+      <Name>VSBugTracker</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
