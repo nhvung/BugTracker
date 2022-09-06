@@ -101,9 +101,6 @@ namespace BugSearch
 
             ts_top_filters_Click(null, null);
 
-            ts_version_com_reportversion.SelectedIndexChanged += ts_version_com_version_selected_index_Changed;
-            ts_version_com_resolveversion.SelectedIndexChanged += ts_version_com_version_selected_index_Changed;
-
             new Thread(ite => InitializeValues(autoLoad)).Start();
         }
 
@@ -147,8 +144,6 @@ namespace BugSearch
                         var bug = _m_bug[bugID];
                         rtxt_buginfo_description.Text = bug.Description;
                         rtxt_buginfo_comment.Text = bug.Comment;
-                        rtxt_resolveversion.Text = bug.ResolveVersion;
-                        rtxt_version.Text = bug.Version;
                         panel_attachment.Controls.Clear();
                         if (bug.Attachments?.Count > 0)
                         {
@@ -233,25 +228,7 @@ namespace BugSearch
 
         private void ts_top_refresh_Click(object sender, EventArgs e)
         {
-            var but = sender as ToolStripSplitButton;
-            if(but != null)
-            {
-                if(but.ButtonPressed)
-                {
-                    _tmrAutoRefresh?.Stop();
-                    _tmrAutoRefresh?.Dispose();
-                    if (ts_top_refresh.HasDropDownItems)
-                    {
-                        foreach (ToolStripMenuItem tItem in ts_top_refresh.DropDownItems)
-                        {
-                            tItem.Checked = false;
-                        }
-                    }
-
-                    new Thread(LoadBugs).Start();
-                }
-            }
-            
+            new Thread(LoadBugs).Start();
         }
 
         public void ReloadTasks()
@@ -268,7 +245,7 @@ namespace BugSearch
                         foreach (TSprintInfo sprint in sprints)
                         {
                             ToolStripMenuItem[] taskItems = sprint.Tasks.Select(ite => new ToolStripMenuItem(ite.Summary, Resources.task, cms_bug_moveto_Click, ite.SprintID + "-" + ite.TaskID)).ToArray();
-                            ToolStripMenuItem sprintItem = new ToolStripMenuItem(sprint.SprintName, Resources.story, null, sprint.SprintID + "-0");
+                            ToolStripMenuItem sprintItem = new ToolStripMenuItem(sprint.SprintName, Resources.story, cms_bug_moveto_Click, sprint.SprintID + "-0");
                             sprintItem.DropDownItems.AddRange(taskItems);
                             cms_bug_moveto.DropDownItems.Add(sprintItem);
                         }
@@ -280,12 +257,11 @@ namespace BugSearch
                 MessageBox.Show(ex.Message);
             }
         }
-        bool _valueInited;
         void InitializeValues(bool autoLoad)
         {
             try
             {
-                _valueInited = false;
+
                 var accounts = _bugProcess.GetAllAccounts();
                 _m_account = accounts.ToDictionary(ite => ite.AccountID, ite => ite.AccountName);
 
@@ -311,19 +287,7 @@ namespace BugSearch
                 }
                 else _assigneeIds = new List<int>() { -1 };
 
-                var testers = _bugProcess.GetAllTesters();
-                if (testers?.Count > 0)
-                {
-                    _dlgProcess.Execute(ts_reporter, () =>
-                    {
-                        ts_reporter.Items.Add(new ToolStripButton("Anonymous", Resources.generic, ts_reporter_item_Click, "0") { CheckOnClick = true, Checked = true });
-                        ToolStripButton[] items = testers.Select(ite => new ToolStripButton(ite.AccountName, Resources.generic, ts_reporter_item_Click, ite.AccountID.ToString()) { CheckOnClick = true, Checked = true }).ToArray();
-                        ts_reporter.Items.AddRange(items);
-                    });
-                    _reporterIds = testers.Select(ite => ite.AccountID).ToList();
-                    _reporterIds.Add(0);
-                }
-                else _reporterIds = new List<int>() { -1 };
+
 
                 var statuses = _bugProcess.GetAllStatuses();
                 if (statuses?.Count > 0)
@@ -367,29 +331,8 @@ namespace BugSearch
                     _priorityIds = priorities.Select(ite => ite.PriorityID).ToList();
                 }
                 else _priorityIds = new List<int>() { -1 };
-
-                var versions = _bugProcess.GetAllBugVersions(_sprintID);
-                if(versions?.Count > 0)
-                {
-                    List<string> rpVersions = new List<string>() { "- All -" };
-                    rpVersions.AddRange(versions.Where(ite => !string.IsNullOrEmpty(ite?.Version)).Select(ite => ite.Version));
-
-                    List<string> rsVersions = new List<string>() { "- All -" };
-                    rsVersions.AddRange(versions.Where(ite => !string.IsNullOrEmpty(ite?.ResolveVersion)).Select(ite => ite.ResolveVersion));
-
-                    _dlgProcess.Execute(ts_version, () => 
-                    {
-                        ts_version_com_reportversion.Items.AddRange(rpVersions.ToArray());
-                        ts_version_com_reportversion.SelectedIndex = 0;
-
-                        ts_version_com_resolveversion.Items.AddRange(rsVersions.ToArray());
-                        ts_version_com_resolveversion.SelectedIndex = 0;
-                    });
-                }
-
-
                 if (autoLoad) new Thread(LoadBugs).Start();
-                _valueInited = true;
+
             }
             catch (Exception ex)
             {
@@ -562,29 +505,22 @@ namespace BugSearch
                 ts_buginfo_edit.Text = "Update";
                 rtxt_buginfo_comment.ReadOnly = false;
                 rtxt_buginfo_description.ReadOnly = false;
-                rtxt_version.ReadOnly = false;
-                rtxt_resolveversion.ReadOnly = false;
             }
             else if (ts_buginfo_edit.Text.Equals("Update", StringComparison.InvariantCultureIgnoreCase))
             {
                 if (dgv_bug.SelectedRows.Count > 0)
                 {
+
                     try
                     {
                         int bugID = Convert.ToInt32(dgv_bug.SelectedRows[0].Cells["col_bug_id"].Value);
                         _bugProcess.UpdateBugDescription(bugID, rtxt_buginfo_description.Text);
                         _bugProcess.UpdateBugComment(bugID, rtxt_buginfo_comment.Text);
-                        _bugProcess.UpdateBugVersion(bugID, rtxt_version.Text);
-                        _bugProcess.UpdateBugResolveVersion(bugID, rtxt_resolveversion.Text);
                         if (_m_bug != null && _m_bug.ContainsKey(bugID))
                         {
                             _m_bug[bugID].Description = rtxt_buginfo_description.Text;
                             _m_bug[bugID].Comment = rtxt_buginfo_comment.Text;
-                            _m_bug[bugID].Version = rtxt_version.Text;
-                            _m_bug[bugID].ResolveVersion = rtxt_resolveversion.Text;
                             _dlgProcess.SetDataGridViewValue(dgv_bug, dgv_bug.SelectedRows[0].Index, "col_bug_description", rtxt_buginfo_description.Text);
-                            _dlgProcess.SetDataGridViewValue(dgv_bug, dgv_bug.SelectedRows[0].Index, "col_bug_resolveversion", rtxt_resolveversion.Text);
-                            _dlgProcess.SetDataGridViewValue(dgv_bug, dgv_bug.SelectedRows[0].Index, "col_bug_version", rtxt_version.Text);
                         }
                     }
                     catch (Exception ex)
@@ -595,8 +531,6 @@ namespace BugSearch
                 ts_buginfo_edit.Text = "Edit";
                 rtxt_buginfo_comment.ReadOnly = true;
                 rtxt_buginfo_description.ReadOnly = true;
-                rtxt_version.ReadOnly = true;
-                rtxt_resolveversion.ReadOnly = true;
             }
         }
 
@@ -624,7 +558,6 @@ namespace BugSearch
                 ts_assignee.Visible = ts_top_filters.Checked;
                 ts_priority.Visible = ts_top_filters.Checked;
                 ts_status.Visible = ts_top_filters.Checked;
-                ts_reporter.Visible = ts_top_filters.Checked;
             }
             catch (Exception ex)
             {
@@ -639,8 +572,7 @@ namespace BugSearch
         }
 
         Dictionary<int, TBugFullInfo> _m_bug;
-        string _bugLoadSummaryText;
-        public void LoadBugs()
+        void LoadBugs()
         {
             lock (_lockObj)
             {
@@ -651,21 +583,7 @@ namespace BugSearch
                 _dlgProcess.SetText(rtxt_buginfo_comment, "");
                 try
                 {
-                    string rpVersion = _dlgProcess.GetControlValue(ts_version, ts_version => ts_version_com_reportversion.Text);
-                    if (rpVersion.Equals("- ALL -", StringComparison.InvariantCultureIgnoreCase))
-                        rpVersion = "";
-                    string[] rpVersions = string.IsNullOrEmpty(rpVersion) ? new string[0] : new string[] { rpVersion };
-
-                    string rsVersion = _dlgProcess.GetControlValue(ts_version, ts_version => ts_version_com_resolveversion.Text);
-                    if (rsVersion.Equals("- ALL -", StringComparison.InvariantCultureIgnoreCase))
-                        rsVersion = "";
-                    string[] rsVersions = string.IsNullOrEmpty(rsVersion) ? new string[0] : new string[] { rsVersion };
-
-                    //var bugs = _bugProcess.GetBugs(_sprintID, _taskID, _statusIds.ToArray(), _priorityIds.ToArray(), _assigneeIds.ToArray());
-                    //var bugs = _bugProcess.GetBugs(_sprintID, _taskID, _statusIds.ToArray(), _priorityIds.ToArray(), _assigneeIds.ToArray(), _reporterIds.ToArray());
-                    var bugs = _bugProcess.GetBugs(_sprintID, _taskID, _statusIds.ToArray(), _priorityIds.ToArray(), _assigneeIds.ToArray(), _reporterIds.ToArray(), rpVersions, rsVersions);
-
-
+                    var bugs = _bugProcess.GetBugs(_sprintID, _taskID, _statusIds.ToArray(), _priorityIds.ToArray(), _assigneeIds.ToArray());
                     _m_bug = bugs.ToDictionary(ite => ite.BugID, ite => ite);
                     foreach (var bug in bugs)
                     {
@@ -680,10 +598,9 @@ namespace BugSearch
                         DateTime createdDate;
                         if (!DateTime.TryParseExact(bug.CreatedDate.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out createdDate)) createdDate = DateTime.MinValue;
 
-                        int rIdx = _dlgProcess.AddDataGridViewRow(dgv_bug, false, bug.BugID, priorityFormat, priority, statusCell, bug.Description, bug.Version, bug.ResolveVersion, reporter, assignee, createdDate == DateTime.MinValue ? "-" : createdDate.ToString("dd/MM/yyyy"));
+                        int rIdx = _dlgProcess.AddDataGridViewRow(dgv_bug, false, bug.BugID, priorityFormat, priority, statusCell, bug.Description, reporter, assignee, createdDate == DateTime.MinValue ? "-" : createdDate.ToString("dd/MM/yyyy"));
                     }
-                    _bugLoadSummaryText = "BugList. Total Bugs: " + bugs.Count;
-                    _dlgProcess.SetText(grp_buglist, _bugLoadSummaryText);
+                    _dlgProcess.SetText(grp_buglist, "BugList. Total Bugs: " + bugs.Count);
                 }
                 catch (Exception ex)
                 {
@@ -701,19 +618,16 @@ namespace BugSearch
                 if (rows.Count == 0) rows = _dlgProcess.GetDataGridViewSelectedRows(dgv_bug);
                 if (rows.Count == 0) return;
 
-                if (MessageBox.Show("Do you want to move?", "Move Bug Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    int[] bugIds = rows.Select(ite => Convert.ToInt32(ite.Cells["col_bug_id"].Value)).ToArray();
+                int[] bugIds = rows.Select(ite => Convert.ToInt32(ite.Cells["col_bug_id"].Value)).ToArray();
 
-                    ToolStripMenuItem item = sender as ToolStripMenuItem;
-                    string[] ids = item.Name.Split('-');
-                    int sprintID, taskID;
-                    if (!int.TryParse(ids[0], out sprintID)) sprintID = 0;
-                    if (!int.TryParse(ids[1], out taskID)) taskID = 0;
+                ToolStripMenuItem item = sender as ToolStripMenuItem;
+                string[] ids = item.Name.Split('-');
+                int sprintID, taskID;
+                if (!int.TryParse(ids[0], out sprintID)) sprintID = 0;
+                if (!int.TryParse(ids[1], out taskID)) taskID = 0;
 
-                    _bugProcess.MoveBugs(sprintID, taskID, bugIds);
-                    ts_top_refresh_Click(null, null);
-                }                
+                _bugProcess.MoveBugs(sprintID, taskID, bugIds);
+                ts_top_refresh_Click(null, null);
             }
             catch (Exception ex)
             {
@@ -883,26 +797,13 @@ namespace BugSearch
                 if (rows.Count == 0) rows = _dlgProcess.GetDataGridViewSelectedRows(dgv_bug);
                 if (rows.Count == 0) return;
 
-                AddTextF addTextF = new AddTextF("Resolve for version: ", "");
-                if(addTextF.ShowDialog() == DialogResult.OK)
+                int[] bugIds = rows.Select(ite => Convert.ToInt32(ite.Cells["col_bug_id"].Value)).ToArray();
+                _bugProcess.ResolveBugs(_account.AccountID, bugIds);
+                var statusCell = _bugCellStatus["Resolved"];
+                foreach (var row in rows)
                 {
-                    int[] bugIds = rows.Select(ite => Convert.ToInt32(ite.Cells["col_bug_id"].Value)).ToArray();
-                    _bugProcess.ResolveBugs(_account.AccountID, bugIds);
-                    _bugProcess.UpdateBugResolveVersion(bugIds, addTextF.InputText);
-                    var statusCell = _bugCellStatus["Resolved"];
-                    foreach (var row in rows)
-                    {
-                        _dlgProcess.SetDataGridViewValue(dgv_bug, row.Index, "col_bug_assignee", _account.AccountName);
-                        _dlgProcess.SetDataGridViewValue(dgv_bug, row.Index, "col_bug_cellstatus", statusCell);
-                    }
-                    foreach(int bugId in bugIds)
-                    {
-                        if(_m_bug.ContainsKey(bugId))
-                        {
-                            _m_bug[bugId].ResolveVersion = addTextF.InputText;
-                        }
-                    }
-                    rtxt_resolveversion.Text = addTextF.InputText;
+                    _dlgProcess.SetDataGridViewValue(dgv_bug, row.Index, "col_bug_assignee", _account.AccountName);
+                    _dlgProcess.SetDataGridViewValue(dgv_bug, row.Index, "col_bug_cellstatus", statusCell);
                 }
             }
             catch (Exception ex)
@@ -1059,7 +960,7 @@ namespace BugSearch
                         DateTime createdDate;
                         if (!DateTime.TryParseExact(bug.CreatedDate.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out createdDate)) createdDate = DateTime.MinValue;
 
-                        int rIdx = _dlgProcess.AddDataGridViewRow(dgv_bug, false, bug.BugID, priorityFormat, priority, statusCell, bug.Description, bug.Version, bug.ResolveVersion, reporter, assignee, createdDate == DateTime.MinValue ? "-" : createdDate.ToString("dd/MM/yyyy"));
+                        int rIdx = _dlgProcess.AddDataGridViewRow(dgv_bug, false, bug.BugID, priorityFormat, priority, statusCell, bug.Description, reporter, assignee, createdDate == DateTime.MinValue ? "-" : createdDate.ToString("dd/MM/yyyy"));
                     }
                     _dlgProcess.SetText(grp_buglist, "BugList. Total Bugs: " + bugs.Count);
                 }
@@ -1156,148 +1057,6 @@ namespace BugSearch
                 }
             }
 
-        }
-
-        List<int> _reporterIds;
-
-        private void ts_top_txt_bugids_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if(e.KeyChar == 13)
-            {
-                ts_top_but_searchbug_Click(null, null);
-            }
-        }
-
-        System.Timers.Timer _tmrAutoRefresh;
-        int _refreshInterval, _remainInterval;
-        private void ts_top_refresh_auto60s_Click(object sender, EventArgs e)
-        {
-            _autoRefresh(60, ts_top_refresh_auto60s);
-        }
-        private void ts_top_refresh_auto30s_Click(object sender, EventArgs e)
-        {
-            _autoRefresh(30, ts_top_refresh_auto30s);
-        }
-        private void autoEach15sToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _autoRefresh(15, ts_top_refresh_auto15s);
-        }
-        void _autoRefresh(int interval, ToolStripMenuItem item)
-        {
-            if (_tmrAutoRefresh != null)
-            {
-                _tmrAutoRefresh.Stop();
-                _tmrAutoRefresh.Dispose();
-            }
-            try
-            {
-                if(ts_top_refresh.HasDropDownItems)
-                {
-                    foreach(ToolStripMenuItem tItem in ts_top_refresh.DropDownItems)
-                    {
-                        
-                        tItem.Checked = false;
-                    }
-                }
-                item.Checked = true;
-                _refreshInterval = interval;
-                _remainInterval = _refreshInterval;
-                _tmrAutoRefresh = new System.Timers.Timer(1000);
-                _tmrAutoRefresh.Elapsed += _tmrAutoRefresh_Elapsed;
-                _tmrAutoRefresh.Start();
-            }
-            catch { }
-        }
-
-        
-
-        private void _tmrAutoRefresh_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            _tmrAutoRefresh?.Stop();
-            try
-            {
-                if(_remainInterval == 0)
-                {
-                    _dlgProcess.SetText(grp_buglist, _bugLoadSummaryText + $". Refreshing...");
-                    LoadBugs();
-                    _remainInterval = _refreshInterval;
-                }
-                else
-                {
-                    _remainInterval--;
-
-                    _dlgProcess.SetText(grp_buglist, _bugLoadSummaryText + $". Auto refresh in {_remainInterval}s...");
-                }
-            }
-            catch { }
-            _tmrAutoRefresh?.Start();
-        }
-
-        private void ts_reporter_allreporters_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                _reporterIds = new List<int>();
-                foreach (ToolStripButton button in ts_reporter.Items)
-                {
-                    if (button.Name.Equals("ts_reporter_allreporters", StringComparison.InvariantCultureIgnoreCase))
-                    { }
-                    else
-                    {
-                        button.Checked = ts_reporter_allreporters.Checked;
-                        if (ts_reporter_allreporters.Checked) _reporterIds.Add(int.Parse(button.Name));
-                    }
-                }
-                if (_reporterIds.Count == 0) _reporterIds.Add(-1);
-                new Thread(LoadBugs).Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        void ts_reporter_item_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ts_reporter_allreporters.Checked = true;
-                _reporterIds = new List<int>();
-                foreach (ToolStripButton button in ts_reporter.Items)
-                {
-                    if (button.Name.Equals("ts_reporter_allreporters", StringComparison.InvariantCultureIgnoreCase))
-                    { }
-                    else
-                    {
-                        if (button.Checked)
-                        {
-                            _reporterIds.Add(int.Parse(button.Name));
-                        }
-                        else ts_reporter_allreporters.Checked = false;
-                    }
-                }
-                if (_reporterIds.Count == 0) _reporterIds.Add(-1);
-                new Thread(LoadBugs).Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        void ts_version_com_version_selected_index_Changed(object sender, EventArgs e)
-        {
-            try
-            {
-                if(_valueInited)
-                {
-                    new Thread(LoadBugs).Start();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
     }
 }

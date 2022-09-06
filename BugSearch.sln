@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugSearch", "BugSearch.csproj", "{431A6471-2A7A-435D-AD7C-B3120F52C1DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSBugTracker", "..\..\Libraries\VSBugTracker.2.2020.0714.5\VSBugTracker.csproj", "{281A7855-666E-4A71-BBDB-F355DC72D9C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSBugTracker", "..\VSBugTracker\VSBugTracker.csproj", "{281A7855-666E-4A71-BBDB-F355DC72D9C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

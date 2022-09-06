@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -78,9 +78,8 @@
     <ApplicationIcon>mainIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSEncode, Version=1.0.2017.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\@@FSSources\@@Services\FSMailService\DLL\FSEncode.dll</HintPath>
+    <Reference Include="FSEncode">
+      <HintPath>DLL\FSEncode.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -247,7 +246,7 @@
     <Content Include="Icons\trivial.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\VSBugTracker.2.2020.0714.5\VSBugTracker.csproj">
+    <ProjectReference Include="..\VSBugTracker\VSBugTracker.csproj">
       <Project>{281a7855-666e-4a71-bbdb-f355dc72d9c8}</Project>
       <Name>VSBugTracker</Name>
     </ProjectReference>

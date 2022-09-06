@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using VSBugTracker;
 using VSBugTracker.ADO;
@@ -19,6 +20,8 @@ namespace BugSearch
         TAccountADO _account;
         AccountRight[] _AccountRights;
         BugListF _bugListF;
+
+        System.Timers.Timer _tmrAutoRefresh;
 
         public MainF()
         {
@@ -42,7 +45,7 @@ namespace BugSearch
 
         private void MainF_Load(object sender, EventArgs e)
         {
-            Text = "BUGSEARCH - 2.0.1.1 - 20210329.1633";
+            Text = "BUGSEARCH - 2.0.2 - 20220906.1440";
 
             menu_database_open_Click(null, null);
         }
