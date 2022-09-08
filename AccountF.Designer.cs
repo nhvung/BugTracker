@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountF));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -70,7 +71,6 @@
             this.txt_username = new System.Windows.Forms.TextBox();
             this.txt_fullname = new System.Windows.Forms.TextBox();
             this.txt_password = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sc_1)).BeginInit();
@@ -96,6 +96,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(797, 40);
             this.panel1.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(7, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(224, 24);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "ACCOUNT MANAGER";
             // 
             // panel2
             // 
@@ -236,14 +246,15 @@
             // 
             this.dgv_account.AllowUserToAddRows = false;
             this.dgv_account.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_account.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgv_account.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_account.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_account.ColumnHeadersHeight = 30;
             this.dgv_account.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgv_account.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -259,6 +270,7 @@
             this.dgv_account.MultiSelect = false;
             this.dgv_account.Name = "dgv_account";
             this.dgv_account.RowHeadersVisible = false;
+            this.dgv_account.RowTemplate.Height = 30;
             this.dgv_account.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_account.Size = new System.Drawing.Size(781, 225);
             this.dgv_account.TabIndex = 0;
@@ -511,16 +523,6 @@
             this.txt_password.Name = "txt_password";
             this.txt_password.Size = new System.Drawing.Size(606, 21);
             this.txt_password.TabIndex = 7;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(7, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(224, 24);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "ACCOUNT MANAGER";
             // 
             // AccountF
             // 

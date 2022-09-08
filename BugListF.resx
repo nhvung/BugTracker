@@ -147,10 +147,10 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADQSURBVDhP3ZBBCoJQFEVtBdFaghbg0BWoq2gsupvkhwQt
-        pCzRJhXRwGogqD9EoSa3r3wzIctm0oE7udz73uMJ3SHLMvwiXqvITVEUW+njAM/b4Hy6vNVuu28eEIbh
+        pCzRJhXRwGogoj9EoSa3r3wzIctm0oE7udz73uMJ3SHLMvwiXqvITVEUW+njAM/b4Hy6vNVuu28eEIbh
         XdM0qKqKlb0Gja81LRc2ZFmGYRhg2RuvVaRpOkqS5EgIgSRJIGRaFOOIwpyYhWdZFljmwLJDXqtDKR2w
-        8+aO40BRFOi6jvIq13Xz02dRFPV5/D0AemzDOAiC59N830fu8Ug7yqc2Pu0bfzLgVdzuHILwAA5rKaZO
-        Qw5wAAAAAElFTkSuQmCC
+        8+aO40BRFOi6jvIq13Xz02dRFPV5/D0AemzDOAiC59N830fu8Ug7yqc2Pu0bfzLgVdzuHILwAP5aKaCG
+        WY0XAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="ts_top_viewbugdetail.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -192,24 +192,6 @@
         GzjnfNbKysT1/6AWhk6WbSwLmsMMLgGbwwwEd4f3QYgnLU9Dw9cuDSAAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="ts_priority.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>985, 17</value>
-  </metadata>
-  <metadata name="ts_assignee.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>872, 17</value>
-  </metadata>
-  <metadata name="ts_reporter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>767, 17</value>
-  </metadata>
-  <metadata name="ts_buginfo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>418, 17</value>
-  </metadata>
-  <metadata name="ts_version.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1195, 17</value>
-  </metadata>
-  <metadata name="ts_status.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1090, 17</value>
-  </metadata>
   <metadata name="ts_version.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1195, 17</value>
   </metadata>
@@ -375,7 +357,7 @@
   <metadata name="col_bug_status.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="dataGridViewCellStyle10.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="dataGridViewCellStyle12.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG

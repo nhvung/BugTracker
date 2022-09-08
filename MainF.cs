@@ -45,7 +45,7 @@ namespace BugSearch
 
         private void MainF_Load(object sender, EventArgs e)
         {
-            Text = "BUGSEARCH - 2.0.2 - 20220906.1440";
+            Text = "BUGSEARCH - 2.0.3 - 20220908.1145";
 
             menu_database_open_Click(null, null);
         }
@@ -100,9 +100,15 @@ namespace BugSearch
                     }
                     else
                     {
-                        if (_AccountRights.Contains(AccountRight.AddTask)) cms_task.Items.Add(new ToolStripMenuItem("Add Task...", null, cms_task_addtask_Click, "cms_task_addtask") { Tag = sprintID });
-                        if (cms_task.Items.Count > 0) cms_task.Items.Add(new ToolStripSeparator());
-                        if (_AccountRights.Contains(AccountRight.DeleteSprint)) cms_task.Items.Add(new ToolStripMenuItem("Delete", null, cms_task_deletesprint_Click, "cms_task_deletesprint") { Tag = sprintID });
+                        if (_AccountRights.Contains(AccountRight.AddTask))
+                        {
+                            cms_task.Items.Add(new ToolStripMenuItem("Add Task...", null, cms_task_addtask_Click, "cms_task_addtask") { Tag = sprintID });
+                        }                       
+                        if (_AccountRights.Contains(AccountRight.DeleteSprint))
+                        {
+                            if (cms_task.Items.Count > 0) cms_task.Items.Add(new ToolStripSeparator());
+                            cms_task.Items.Add(new ToolStripMenuItem("Delete", null, cms_task_deletesprint_Click, "cms_task_deletesprint") { Tag = sprintID });
+                        }
                     }
                 }
                 else // task node
@@ -113,7 +119,7 @@ namespace BugSearch
                     if (_AccountRights.Contains(AccountRight.DeleteTask))
                     {
                         cms_task.Items.Add(new ToolStripMenuItem("Rename", null, cms_task_renametask_Click, "cms_task_renametask") { Tag = taskID });
-                        if (cms_task.Items.Count > 0) cms_task.Items.Add(new ToolStripSeparator());
+                        cms_task.Items.Add(new ToolStripSeparator());
                         cms_task.Items.Add(new ToolStripMenuItem("Delete", null, cms_task_deletetask_Click, "cms_task_deletetask") { Tag = taskID });
                     }
                 }
@@ -422,8 +428,30 @@ namespace BugSearch
 
         private void menu_database_relogin_Click(object sender, EventArgs e)
         {
-            Thread th = new Thread(LoadTasks);
-            th.Start();
+
+            try
+            {
+                if (_account != null)
+                {
+                    _account = _bugProcess.GetAccountByID(_account.AccountID);
+                    _AccountRights = new AccountRight[] { AccountRight.AddAccount, AccountRight.AddBug, AccountRight.AddSprint, AccountRight.AddTask, AccountRight.AssignBug, AccountRight.ByDesign, AccountRight.DeleteAccount, AccountRight.DeleteBug, AccountRight.DeleteSprint, AccountRight.DeleteTask, AccountRight.NotFix, AccountRight.Reopen, AccountRight.Resolve, AccountRight.SetPriority, AccountRight.Verify, AccountRight.MoveBug, AccountRight.AssignToMe, AccountRight.Fixed, AccountRight.PleaseWait };
+                    _AccountRights = _AccountRights.Where(ite => (_account.AccountRight & (int)ite) == (int)ite).ToArray();
+
+                    ts_bottom_user.Text = _account.AccountName;
+
+                    menu_admintool.Visible = _account.AccountType == 0;
+                    ts_task.Visible = _AccountRights.Contains(AccountRight.AddSprint);
+
+                    panel_buglist.Controls.Clear();
+                    _bugListF = new BugListF(_account, _AccountRights, -1, -1, false) { TopLevel = false, Dock = DockStyle.Fill, Enabled = false };
+                    panel_buglist.Controls.Add(_bugListF);
+                    _bugListF.Show();
+
+                    Thread th = new Thread(LoadTasks);
+                    th.Start();
+                }
+            }
+            catch { }
         }
 
         private void menu_database_exit_Click(object sender, EventArgs e)

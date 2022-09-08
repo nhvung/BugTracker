@@ -288,40 +288,19 @@ namespace BugSearch
                 }
                 else if (but_execute.Text == "Update Info")
                 {
-                    if (txt_username.Text == "" || txt_fullname.Text == "" || txt_password.Text == "" || dgv_account.SelectedRows.Count == 0) return;
-
-                    var row = dgv_account.SelectedRows[0];
-                    TAccountADO account = new TAccountADO();
-                    account.AccountID = Convert.ToInt32(row.Cells["col_account_id"].Value);
-                    account.AccountLogin = txt_username.Text;
-                    account.AccountName = txt_fullname.Text;
-                    account.EncryptedPassword = FSEncode.FSSecurity.EncryptSHA512(string.Format("{0};{1}", txt_username.Text, txt_password.Text));
-                    account.AccountType = rad_accouttype_coder.Checked ? 1 : rad_accouttype_tester.Checked ? 2 : rad_accouttype_full.Checked ? 3 : 4;
-                    int right = 0;
-                    foreach (ToolStripButton button in ts_right.Items)
+                    if (MessageBox.Show("Do you want to update?", "Update Account", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
-                        if (button.Checked)
+                        var row = dgv_account.SelectedRows[0];
+                        TAccountADO account = new TAccountADO();
+                        account.AccountID = Convert.ToInt32(row.Cells["col_account_id"].Value);
+                        account.AccountLogin = txt_username.Text;
+                        account.AccountName = txt_fullname.Text;
+                        if (!string.IsNullOrWhiteSpace(txt_password.Text))
                         {
-                            right += Convert.ToInt32(button.Tag);
+                            account.EncryptedPassword = FSEncode.FSSecurity.EncryptSHA512(string.Format("{0};{1}", txt_username.Text, txt_password.Text));
                         }
-                    }
-                    account.AccountRight = right;
-                    try
-                    {
-                        _bugProcess.UpdateAccount(account);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                    Thread th = new Thread(InitializeValues);
-                    th.Start();
-                }
-                else if (but_execute.Text == "Update Right")
-                {
-                    var rows = _dlgProcess.GetDataGridViewCheckedRows(dgv_account, "col_account_chk");
-                    if(rows.Count > 0)
-                    {
+
+                        account.AccountType = rad_accouttype_coder.Checked ? 1 : rad_accouttype_tester.Checked ? 2 : rad_accouttype_full.Checked ? 3 : 4;
                         int right = 0;
                         foreach (ToolStripButton button in ts_right.Items)
                         {
@@ -330,8 +309,49 @@ namespace BugSearch
                                 right += Convert.ToInt32(button.Tag);
                             }
                         }
-                        int[] accountIds = rows.Select(ite => Convert.ToInt32(ite.Cells["col_account_id"].Value)).ToArray();
-                        _bugProcess.AssignRight(accountIds, right);
+                        account.AccountRight = right;
+                        try
+                        {
+                            _bugProcess.UpdateAccount(account);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        Thread th = new Thread(InitializeValues);
+                        th.Start();
+                    }
+                        
+                }
+                else if (but_execute.Text == "Update Right")
+                {
+                    var rows = _dlgProcess.GetDataGridViewCheckedRows(dgv_account, "col_account_chk");
+                    if(rows.Count == 0)
+                    {
+                        rows = _dlgProcess.GetDataGridViewSelectedRows(dgv_account);
+                    }
+                    if(rows.Count > 0)
+                    {
+                        if (MessageBox.Show("Do you want to update?", "Update Account", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        {
+                            int type = rad_accouttype_coder.Checked ? 1 : rad_accouttype_tester.Checked ? 2 : rad_accouttype_full.Checked ? 3 : 4;
+
+                            int right = 0;
+                            foreach (ToolStripButton button in ts_right.Items)
+                            {
+                                if (button.Checked)
+                                {
+                                    right += Convert.ToInt32(button.Tag);
+                                }
+                            }
+
+                            int[] accountIds = rows.Select(ite => Convert.ToInt32(ite.Cells["col_account_id"].Value)).ToArray();
+                            _bugProcess.AssignRight(accountIds, type, right);
+
+                            Thread th = new Thread(InitializeValues);
+                            th.Start();
+                        }
+                            
                     }
                     
                 }
@@ -356,8 +376,8 @@ namespace BugSearch
                     grp_accountinfo.Visible = true;
                     sc_1.Panel2Collapsed = false;
                     var row = dgv_account.SelectedRows[0];
-                    txt_username.Text = row.Cells["col_account_username"].Value.ToString();
-                    txt_fullname.Text = row.Cells["col_account_name"].Value.ToString();
+                    //txt_username.Text = row.Cells["col_account_username"].Value.ToString();
+                    //txt_fullname.Text = row.Cells["col_account_name"].Value.ToString();
                     txt_password.Text = FSEncode.FSSecurity.Decrypt(row.Cells["col_account_password"].Value.ToString());
                     int type = Convert.ToInt32(row.Cells["col_account_type"].Value);
                     if (type == 1) rad_accouttype_coder.Checked = true;
@@ -420,13 +440,37 @@ namespace BugSearch
 
         private void but_assignright_Click(object sender, EventArgs e)
         {
-
             try
             {
-                grp_right.Visible = true;
-                grp_accountinfo.Visible = false;
-                sc_1.Panel2Collapsed = false;
-                but_execute.Text = "Update Right";
+                if (dgv_account.SelectedRows.Count > 0)
+                {
+                    var row = dgv_account.SelectedRows[0];
+
+                    int type = Convert.ToInt32(row.Cells["col_account_type"].Value);
+                    if (type == 1) rad_accouttype_coder.Checked = true;
+                    else if (type == 2) rad_accouttype_tester.Checked = true;
+                    else if (type == 3) rad_accouttype_full.Checked = true;
+                    else rad_accouttype_other.Checked = true;
+
+                    int[] rights = new int[] { (int)AccountRight.AddAccount, (int)AccountRight.AddBug, (int)AccountRight.AddSprint,
+                        (int)AccountRight.AddTask, (int)AccountRight.AssignBug, (int)AccountRight.ByDesign,(int)AccountRight.DeleteAccount,
+                        (int)AccountRight.DeleteBug, (int)AccountRight.DeleteSprint,(int) AccountRight.DeleteTask,(int) AccountRight.NotFix, (int)AccountRight.Reopen,
+                        (int)AccountRight.Resolve,(int) AccountRight.SetPriority, (int)AccountRight.Verify, (int)AccountRight.MoveBug,(int) AccountRight.AssignToMe, (int)AccountRight.Fixed, (int)AccountRight.PleaseWait };
+
+                    int right = Convert.ToInt32(row.Cells["col_account_right"].Value);
+                    rights = rights.Where(ite => (right & ite) == ite).ToArray();
+                    foreach (ToolStripButton button in ts_right.Items)
+                    {
+                        if (rights.Contains(Convert.ToInt32(button.Tag))) button.Checked = true;
+                        else button.Checked = false;
+                    }
+
+                    grp_right.Visible = true;
+                    grp_accountinfo.Visible = false;
+                    sc_1.Panel2Collapsed = false;
+                    but_execute.Text = "Update Right";
+                }
+
             }
             catch (Exception ex)
             {

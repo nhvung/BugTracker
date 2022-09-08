@@ -30,24 +30,26 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BugListF));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.ts_top = new System.Windows.Forms.ToolStrip();
             this.ts_top_newbug = new System.Windows.Forms.ToolStripButton();
             this.ts_top_refresh = new System.Windows.Forms.ToolStripSplitButton();
             this.ts_top_refresh_auto60s = new System.Windows.Forms.ToolStripMenuItem();
+            this.ts_top_refresh_auto30s = new System.Windows.Forms.ToolStripMenuItem();
+            this.ts_top_refresh_auto15s = new System.Windows.Forms.ToolStripMenuItem();
             this.ts_top_filters = new System.Windows.Forms.ToolStripButton();
             this.ts_top_viewbugdetail = new System.Windows.Forms.ToolStripButton();
             this.ts_top_compactview = new System.Windows.Forms.ToolStripButton();
@@ -118,8 +120,6 @@
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewStatusColumn1 = new System.Windows.Forms.DataGridViewStatusColumn();
             this.col_bug_status = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ts_top_refresh_auto30s = new System.Windows.Forms.ToolStripMenuItem();
-            this.ts_top_refresh_auto15s = new System.Windows.Forms.ToolStripMenuItem();
             this.ts_top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sc_1)).BeginInit();
             this.sc_1.Panel1.SuspendLayout();
@@ -202,9 +202,23 @@
             // ts_top_refresh_auto60s
             // 
             this.ts_top_refresh_auto60s.Name = "ts_top_refresh_auto60s";
-            this.ts_top_refresh_auto60s.Size = new System.Drawing.Size(180, 22);
+            this.ts_top_refresh_auto60s.Size = new System.Drawing.Size(160, 22);
             this.ts_top_refresh_auto60s.Text = "Auto each 60s";
             this.ts_top_refresh_auto60s.Click += new System.EventHandler(this.ts_top_refresh_auto60s_Click);
+            // 
+            // ts_top_refresh_auto30s
+            // 
+            this.ts_top_refresh_auto30s.Name = "ts_top_refresh_auto30s";
+            this.ts_top_refresh_auto30s.Size = new System.Drawing.Size(160, 22);
+            this.ts_top_refresh_auto30s.Text = "Auto each 30s";
+            this.ts_top_refresh_auto30s.Click += new System.EventHandler(this.ts_top_refresh_auto30s_Click);
+            // 
+            // ts_top_refresh_auto15s
+            // 
+            this.ts_top_refresh_auto15s.Name = "ts_top_refresh_auto15s";
+            this.ts_top_refresh_auto15s.Size = new System.Drawing.Size(160, 22);
+            this.ts_top_refresh_auto15s.Text = "Auto each 15s";
+            this.ts_top_refresh_auto15s.Click += new System.EventHandler(this.autoEach15sToolStripMenuItem_Click);
             // 
             // ts_top_filters
             // 
@@ -367,14 +381,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_bug.BackgroundColor = System.Drawing.Color.White;
             this.dgv_bug.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_bug.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_bug.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_bug.ColumnHeadersHeight = 35;
             this.dgv_bug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgv_bug.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -390,14 +404,14 @@
             this.col_bug_assignee,
             this.col_bug_createddate});
             this.dgv_bug.ContextMenuStrip = this.cms_bug;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.LightBlue;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_bug.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.LightBlue;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_bug.DefaultCellStyle = dataGridViewCellStyle10;
             this.dgv_bug.Location = new System.Drawing.Point(4, 3);
             this.dgv_bug.Name = "dgv_bug";
             this.dgv_bug.RowHeadersVisible = false;
@@ -415,8 +429,8 @@
             // 
             // col_bug_id
             // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.col_bug_id.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.col_bug_id.DefaultCellStyle = dataGridViewCellStyle2;
             this.col_bug_id.HeaderText = "Bug ID";
             this.col_bug_id.Name = "col_bug_id";
             this.col_bug_id.ReadOnly = true;
@@ -433,8 +447,8 @@
             // 
             // col_bug_priority
             // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.col_bug_priority.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.col_bug_priority.DefaultCellStyle = dataGridViewCellStyle3;
             this.col_bug_priority.HeaderText = "Priority";
             this.col_bug_priority.Name = "col_bug_priority";
             this.col_bug_priority.ReadOnly = true;
@@ -443,8 +457,8 @@
             // 
             // col_bug_cellstatus
             // 
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.col_bug_cellstatus.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.col_bug_cellstatus.DefaultCellStyle = dataGridViewCellStyle4;
             this.col_bug_cellstatus.HeaderText = "Status";
             this.col_bug_cellstatus.Name = "col_bug_cellstatus";
             this.col_bug_cellstatus.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -460,8 +474,8 @@
             // 
             // col_bug_version
             // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.col_bug_version.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.col_bug_version.DefaultCellStyle = dataGridViewCellStyle5;
             this.col_bug_version.HeaderText = "Reported Version";
             this.col_bug_version.MinimumWidth = 180;
             this.col_bug_version.Name = "col_bug_version";
@@ -469,8 +483,8 @@
             // 
             // col_bug_resolveversion
             // 
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.col_bug_resolveversion.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.col_bug_resolveversion.DefaultCellStyle = dataGridViewCellStyle6;
             this.col_bug_resolveversion.HeaderText = "Resolved Version";
             this.col_bug_resolveversion.MinimumWidth = 180;
             this.col_bug_resolveversion.Name = "col_bug_resolveversion";
@@ -478,8 +492,8 @@
             // 
             // col_bug_reporter
             // 
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.col_bug_reporter.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.col_bug_reporter.DefaultCellStyle = dataGridViewCellStyle7;
             this.col_bug_reporter.HeaderText = "Reporter";
             this.col_bug_reporter.Name = "col_bug_reporter";
             this.col_bug_reporter.ReadOnly = true;
@@ -487,8 +501,8 @@
             // 
             // col_bug_assignee
             // 
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.col_bug_assignee.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.col_bug_assignee.DefaultCellStyle = dataGridViewCellStyle8;
             this.col_bug_assignee.HeaderText = "Assignee";
             this.col_bug_assignee.Name = "col_bug_assignee";
             this.col_bug_assignee.ReadOnly = true;
@@ -496,8 +510,8 @@
             // 
             // col_bug_createddate
             // 
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.col_bug_createddate.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.col_bug_createddate.DefaultCellStyle = dataGridViewCellStyle9;
             this.col_bug_createddate.HeaderText = "Created Date";
             this.col_bug_createddate.Name = "col_bug_createddate";
             this.col_bug_createddate.Width = 150;
@@ -941,8 +955,8 @@
             // 
             // dataGridViewStatusColumn1
             // 
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewStatusColumn1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewStatusColumn1.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewStatusColumn1.HeaderText = "Status";
             this.dataGridViewStatusColumn1.Name = "dataGridViewStatusColumn1";
             this.dataGridViewStatusColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -950,30 +964,16 @@
             // 
             // col_bug_status
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle10.NullValue")));
-            this.col_bug_status.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle12.NullValue")));
+            this.col_bug_status.DefaultCellStyle = dataGridViewCellStyle12;
             this.col_bug_status.HeaderText = "Status";
             this.col_bug_status.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.col_bug_status.Name = "col_bug_status";
             this.col_bug_status.ReadOnly = true;
             this.col_bug_status.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.col_bug_status.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // ts_top_refresh_auto30s
-            // 
-            this.ts_top_refresh_auto30s.Name = "ts_top_refresh_auto30s";
-            this.ts_top_refresh_auto30s.Size = new System.Drawing.Size(180, 22);
-            this.ts_top_refresh_auto30s.Text = "Auto each 30s";
-            this.ts_top_refresh_auto30s.Click += new System.EventHandler(this.ts_top_refresh_auto30s_Click);
-            // 
-            // ts_top_refresh_auto15s
-            // 
-            this.ts_top_refresh_auto15s.Name = "ts_top_refresh_auto15s";
-            this.ts_top_refresh_auto15s.Size = new System.Drawing.Size(180, 22);
-            this.ts_top_refresh_auto15s.Text = "Auto each 15s";
-            this.ts_top_refresh_auto15s.Click += new System.EventHandler(this.autoEach15sToolStripMenuItem_Click);
             // 
             // BugListF
             // 
